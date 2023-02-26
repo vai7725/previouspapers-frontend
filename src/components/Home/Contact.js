@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FaEnvelope,
   FaFacebookMessenger,
@@ -9,7 +9,29 @@ import { GlobalContext } from "../../context/Context";
 
 const Contact = () => {
   const { state, dispatch } = GlobalContext();
-  const { inputName, inputEmail, inputUniversity, inputMessage } = state;
+  const {
+    inputName,
+    inputEmail,
+    inputUniversity,
+    inputMessage,
+    submissionMsg,
+    showSubmissionMsg,
+  } = state;
+
+  const storeContactInfo = (e) => {
+    e.preventDefault();
+    dispatch({ type: "STORE_CONTACT_INFO" });
+  };
+
+  const clearSubmissionMsg = () => {
+    dispatch({ type: "CLEAR_SUBMISSION_MESSAGE" });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      clearSubmissionMsg();
+    }, 3000);
+  });
 
   return (
     <section className="contact-section" id="contact-section">
@@ -76,7 +98,10 @@ const Contact = () => {
               }
             ></textarea>
           </div>
-          <button className="btn form-btn">Sumbit</button>
+          <button className="btn form-btn" onClick={storeContactInfo}>
+            Sumbit
+          </button>
+          {showSubmissionMsg && <p>{submissionMsg}</p>}
         </main>
       </form>
     </section>
