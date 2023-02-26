@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
 import { reducer } from "./Reducer";
+// require("dotenv");
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const defaultState = {
+    backendURL: "http://localhost:5000",
     loading: true,
     universityData: [],
     smNavLinksOpen: false,
@@ -21,7 +23,7 @@ const AppProvider = ({ children }) => {
 
   const fetchUniversity = async () => {
     dispatch({ type: "HANDLE_LOADING", payload: true });
-    const res = await axios.get("http://localhost:5000/fetchuniversities");
+    const res = await axios.get(`${state.backendURL}/fetchuniversities`);
     const data = await res.data;
     // console.log(data.universityData);
     const { universityData } = data;

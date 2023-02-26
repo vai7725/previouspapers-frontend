@@ -7,7 +7,7 @@ const Card = ({ unName, unDesc, unPath, unImgLink }) => {
       <img src={unImgLink} alt="university img" className="university-img" />
       <h3 className="university-title">{unName}</h3>
       <p className="university-desc">{unDesc}</p>
-      <Link to={`/papers${unPath}`} className="btn university-card-btn">
+      <Link to={`/api/papers${unPath}`} className="btn university-card-btn">
         Select
       </Link>
     </div>
