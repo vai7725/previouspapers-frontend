@@ -329,22 +329,113 @@ html {
     ======= */
 
 .papers-section {
-  border: 2px solid black;
   min-height: calc(100vh - 70px);
   padding: 0.5rem;
 }
 
 .filter-section,
-.papers {
+.papers-box {
   width: 90%;
-  margin: auto;
+  margin: 0.25rem auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .filter-section {
-  border: 2px solid red;
+  padding: 1rem;
+  box-shadow: 0 0 3px #000;
+  flex-wrap: wrap;
+  border-radius: 5px;
+}
+
+.filter {
+  border-radius: 5px;
+  padding: 0.5rem 0.5rem;
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+  box-shadow: 0 0 3px #000;
+  margin: 0.5rem;
+  width: 100%;
+  text-align: center;
+  max-width: 300px;
+}
+
+.filter:active {
+  box-shadow: none;
+  transform: scale(0.95);
+}
+
+.filter-option {
+  background-color: var(--primary-color-light);
+  border-radius: 5px;
+}
+
+.filter-option:hover {
+  background-color: var(--primary-color);
+  transition: var(--transition-medium);
+}
+
+.papers-box {
+  min-height: calc(100vh - 400px);
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.paper-card {
+  border-radius: 5px;
+  box-shadow: 0 0 3px #000;
+  width: 100%;
+  height: 350px;
+  max-width: 250px;
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paper-card-img {
+  width: 100%;
+  height: 55%;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--primary-color);
+}
+
+.paper-card-img-bar {
+  background-color: #000;
+  height: 1px;
+  margin: 15px auto;
+  width: 80%;
+}
+
+.paper-card-img-bar:nth-child(2n) {
+  width: 70%;
+}
+
+.paper-details {
+  width: 100%;
+  height: 45%;
+  border-radius: 0 0 5px 5px;
+  padding: 0 0.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.paper-details > p {
+  font-size: 0.9rem;
+}
+
+.paper-card-btn {
+  width: 95%;
+  margin: auto;
+  padding: 0.5rem;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* =======
@@ -358,6 +449,10 @@ html {
 
   .ham-btn {
     display: none;
+  }
+
+  .paper-card-btn {
+    padding: 0.2rem;
   }
 }
 
