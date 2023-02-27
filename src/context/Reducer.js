@@ -104,53 +104,61 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "FILTER_PAPERS_BY_COURSE_NAME") {
-    const filteredPaperArr = state.papersData.filter((paper) =>
-      payload === "" ? paper : paper.courseName === payload
-    );
+  if (type === "SET_FILTER_ITEMS") {
+    // console.log("payload ", payload);
     return {
       ...state,
-      papersFiltered: filteredPaperArr,
-      arePapersFiltered: true,
+      ...payload,
     };
   }
 
-  if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
-    if (state.papersFiltered.length < 1) {
-      return {
-        ...state,
-        showAlert: true,
-        alertMsg: "Select the course first!",
-      };
-    } else {
-      const filteredPaperArr = state.papersFiltered.filter((paper) =>
-        payload === "" ? paper : paper.courseYear === payload
-      );
-      return {
-        ...state,
-        papersFiltered: filteredPaperArr,
-        arePapersFiltered: true,
-      };
-    }
-  }
-  if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
-    if (state.papersFiltered.length < 1) {
-      return {
-        ...state,
-        showAlert: true,
-        alertMsg: "Select the course first!",
-      };
-    } else {
-      const filteredPaperArr = state.papersFiltered.filter((paper) =>
-        payload === "" ? paper : paper.courseYear === payload
-      );
-      return {
-        ...state,
-        papersFiltered: filteredPaperArr,
-        arePapersFiltered: true,
-      };
-    }
-  }
+  // if (type === "FILTER_PAPERS_BY_COURSE_NAME") {
+  //   const filteredPaperArr = state.papersData.filter((paper) =>
+  //     payload === "" ? paper : paper.courseName === payload
+  //   );
+  //   return {
+  //     ...state,
+  //     papersFiltered: filteredPaperArr,
+  //     arePapersFiltered: true,
+  //   };
+  // }
+
+  // if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
+  //   if (state.papersFiltered.length < 1) {
+  //     return {
+  //       ...state,
+  //       showAlert: true,
+  //       alertMsg: "Select the course first!",
+  //     };
+  //   } else {
+  //     const filteredPaperArr = state.papersFiltered.filter((paper) =>
+  //       payload === "" ? paper : paper.courseYear === payload
+  //     );
+  //     return {
+  //       ...state,
+  //       papersFiltered: filteredPaperArr,
+  //       arePapersFiltered: true,
+  //     };
+  //   }
+  // }
+  // if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
+  //   if (state.papersFiltered.length < 1) {
+  //     return {
+  //       ...state,
+  //       showAlert: true,
+  //       alertMsg: "Select the course first!",
+  //     };
+  //   } else {
+  //     const filteredPaperArr = state.papersFiltered.filter((paper) =>
+  //       payload === "" ? paper : paper.courseYear === payload
+  //     );
+  //     return {
+  //       ...state,
+  //       papersFiltered: filteredPaperArr,
+  //       arePapersFiltered: true,
+  //     };
+  //   }
+  // }
 
   if (type === "CLEAR_PAPER_FILTERS") {
     return {
@@ -164,6 +172,13 @@ export const reducer = (state, action) => {
     return {
       ...state,
       showAlert: false,
+    };
+  }
+
+  if (type === "HIDE_FILTER_SIDEBAR") {
+    return {
+      ...state,
+      showFilterSidebar: payload,
     };
   }
 };
