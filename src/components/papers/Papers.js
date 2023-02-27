@@ -17,6 +17,7 @@ const Papers = () => {
     papersFiltered,
     arePapersFiltered,
     showAlert,
+    alertMsg,
   } = state;
 
   const fetchPapers = async () => {
@@ -106,26 +107,15 @@ const Papers = () => {
     );
   });
 
-  const filterPapersByCourse = (e) => {
-    console.log("Changed");
-    dispatch({
-      type: "FILTER_PAPERS_BY_COURSE_NAME",
-      payload: e.target.value[0] == "-" ? "" : e.target.value,
-    });
-  };
-
-  const filterPapersByCourseYear = (e) => {
-    dispatch({
-      type: "FILTER_PAPERS_BY_COURSE_YEAR",
-      payload: e.target.value[0] == "-" ? "" : e.target.value,
-    });
-  };
-
   const closeAlert = () => {
     setTimeout(() => {
       dispatch({ type: "CLOSE_ALERT" });
     }, 3000);
   };
+
+  useEffect(() => {
+    showAlert && alert(`${alertMsg}`);
+  }, [showAlert]);
 
   useEffect(() => {
     fetchPapers();
@@ -143,7 +133,13 @@ const Papers = () => {
           name="courseName"
           id=""
           className="filter"
-          onChange={filterPapersByCourse}
+          onChange={(e) => {
+            console.log("Changed");
+            dispatch({
+              type: "FILTER_PAPERS_BY_COURSE_NAME",
+              payload: e.target.value[0] == "-" ? "" : e.target.value,
+            });
+          }}
         >
           {courseNameOptions}
         </select>
@@ -151,11 +147,26 @@ const Papers = () => {
           name="courseYear"
           id=""
           className="filter"
-          onChange={filterPapersByCourseYear}
+          onChange={(e) => {
+            dispatch({
+              type: "FILTER_PAPERS_BY_COURSE_YEAR",
+              payload: e.target.value[0] == "-" ? "" : e.target.value,
+            });
+          }}
         >
           {courseYearOptions}
         </select>
-        <select name="" id="" className="filter">
+        <select
+          name="subject"
+          id=""
+          className="filter"
+          onChange={(e) =>
+            dispatch({
+              type: "FILTER_PAPERS_BY_SUBJECT",
+              payload: e.target.value[0] == "-" ? "" : e.target.value,
+            })
+          }
+        >
           {subjectOptions}
         </select>
         <select name="" id="" className="filter">

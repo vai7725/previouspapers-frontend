@@ -5,9 +5,9 @@ const Alert = ({ closeAlert }) => {
   const { state, dispatch } = GlobalContext();
   const { showAlert } = state;
 
-  useEffect(() => {
-    closeAlert();
-  }, [showAlert]);
+  // useEffect(() => {
+  //   closeAlert();
+  // }, [showAlert]);
 
   return (
     <div className={`${showAlert ? "alert-box alert-box-show " : "alert-box"}`}>

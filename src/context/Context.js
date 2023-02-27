@@ -21,6 +21,7 @@ const AppProvider = ({ children }) => {
     papersFiltered: [],
     arePapersFiltered: false,
     showAlert: false,
+    alertMsg: "",
   };
 
   const [state, dispatch] = useReducer(reducer, defaultState);
