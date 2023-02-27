@@ -7,16 +7,20 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const defaultState = {
-    backendURL: "http://localhost:5000",
     loading: true,
-    universityData: [],
     smNavLinksOpen: false,
+    backendURL: "http://localhost:5000",
+    universityData: [],
     inputName: "",
     inputEmail: "",
     inputUniversity: "",
     inputMessage: "",
     showSubmissionMsg: false,
     submissionMsg: "",
+    papersData: [],
+    papersFiltered: [],
+    arePapersFiltered: false,
+    showAlert: false,
   };
 
   const [state, dispatch] = useReducer(reducer, defaultState);
