@@ -1,17 +1,24 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaFilter, FaTimes } from "react-icons/fa";
 import { GlobalContext } from "../../context/Context";
 import PaperCard from "./PaperCard";
 import Loading from "../Loading";
-import Alert from "../Alert";
+import { CourseNameFilterOption } from "./FilterOptions";
+import { CourseYearFilterOption } from "./FilterOptions";
+import { SubjectFilterOption } from "./FilterOptions";
+import { PaperYearFilterOption } from "./FilterOptions";
+import Error from "../Error";
 
 const Papers = () => {
   const { state, dispatch } = GlobalContext();
   const { university } = useParams();
 
   const {
+    throwError,
+    errorMsg,
+    loading,
     papersData,
     backendURL,
     courseNameArr,
@@ -19,144 +26,229 @@ const Papers = () => {
     paperTitleArr,
     paperYearArr,
     showFilterSidebar,
+    markedFilterOptions,
+    markedCourseNameFilterOptions,
+    filteredPapersByCourseName,
+    filteredPapersByCourseYear,
+    filteredPapersByPaperTitle,
+    filteredPapersByPaperYear,
   } = state;
-
-  // console.log(papersData);
 
   const fetchPapers = async () => {
     dispatch({ type: "HANDLE_LOADING", payload: true });
+
     const res = await axios.get(`${backendURL}/api/papers/${university}`);
-    const { paperData } = await res.data;
+    const { paperData, msg } = await res.data;
+
+    // console.log(msg);
+
     // making set of courseName
-    const courseNameSet = Array.from(
-      new Set(
-        await paperData.map((item) => {
-          return item.courseName;
-        })
-      )
-    );
-
-    // making set of courseYear
-    const courseYearSet = Array.from(
-      new Set(
-        await paperData.map((item) => {
-          return item.courseYear;
-        })
-      )
-    );
-
-    // making set of paperTitle
-    const paperTitleSet = Array.from(
-      new Set(
-        await paperData.map((item) => {
-          return item.paperTitle;
-        })
-      )
-    );
-
-    // making set of paperTitle
-    const paperYearSet = Array.from(
-      new Set(
-        await paperData.map((item) => {
-          return item.paperYear;
-        })
-      )
-    );
-
-    const filterItemObj = {
-      courseNameArr: courseNameSet,
-      courseYearArr: courseYearSet,
-      paperTitleArr: paperTitleSet,
-      paperYearArr: paperYearSet,
-    };
 
     if (paperData) {
+      const courseNameSet = Array.from(
+        new Set(await paperData.map((item) => item.courseName))
+      ).map((item) => ({ id: crypto.randomUUID(), item, isChecked: false }));
       dispatch({ type: "UPDATE_PAPERS_DATA", payload: paperData });
-      dispatch({ type: "SET_FILTER_ITEMS", payload: filterItemObj });
-    } else {
-      dispatch({ type: "UPDATE_PAPERS_DATA", payload: [] });
+      dispatch({
+        type: "SET_INITIAL_COURSE_NAME_FILTER_ITEMS",
+        payload: courseNameSet,
+      });
+    }
+    if (msg) {
+      dispatch({ type: "THROW_ERROR", payload: msg });
     }
   };
 
+  const filterOptionData = {
+    courseNameArr,
+    courseYearArr,
+    paperTitleArr,
+    paperYearArr,
+  };
+
+  const toggleCourseNameCheckbox = (e, i, item) => {
+    const updatedCourseNameArr = [...courseNameArr];
+    updatedCourseNameArr.forEach((element, index) => {
+      i === index ? (element.isChecked = true) : (element.isChecked = false);
+    });
+
+    dispatch({
+      type: "TOGGLE_FILTER_OPTIONS",
+      payload: {
+        ...filterOptionData,
+        courseNameArr: updatedCourseNameArr,
+        paperTitleArr: [],
+        paperYearArr: [],
+      },
+    });
+
+    dispatch({
+      type: "ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ",
+      payload: item,
+    });
+  };
+
+  const toggleCourseYearCheckbox = (e, i, item) => {
+    const updatedCourseYearArr = [...courseYearArr];
+
+    updatedCourseYearArr.forEach((element, index) => {
+      i === index ? (element.isChecked = true) : (element.isChecked = false);
+    });
+
+    dispatch({
+      type: "TOGGLE_FILTER_OPTIONS",
+      payload: {
+        ...filterOptionData,
+        courseYearArr: updatedCourseYearArr,
+        paperYearArr: [],
+      },
+    });
+
+    dispatch({
+      type: "ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ",
+      payload: item,
+    });
+  };
+
+  const toggleSubjectCheckbox = (e, i, item) => {
+    const updatedPaperTitleArr = [...paperTitleArr];
+
+    updatedPaperTitleArr.forEach((element, index) => {
+      i === index ? (element.isChecked = true) : (element.isChecked = false);
+    });
+
+    dispatch({
+      type: "TOGGLE_FILTER_OPTIONS",
+      payload: {
+        ...filterOptionData,
+        paperTitleArr: updatedPaperTitleArr,
+      },
+    });
+
+    dispatch({
+      type: "ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ",
+      payload: item,
+    });
+  };
+
+  const togglePaperYearCheckbox = (e, i, item) => {
+    const updatedPaperYearArr = [...paperYearArr];
+    updatedPaperYearArr.forEach((element, index) => {
+      i === index ? (element.isChecked = true) : (element.isChecked = false);
+    });
+
+    dispatch({
+      type: "TOGGLE_FILTER_OPTIONS",
+      payload: {
+        ...filterOptionData,
+        paperYearArr: updatedPaperYearArr,
+      },
+    });
+
+    dispatch({
+      type: "ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ",
+      payload: item,
+    });
+  };
+
   // adding courseName to the sidebar respective field dynamically
-  const courseNameFilterList = courseNameArr.map((item) => {
+  const courseNameFilterList = courseNameArr.map((itemObj, i) => {
     return (
-      <label
-        key={crypto.randomUUID()}
-        htmlFor={`'${item}'`}
-        className="content"
-      >
-        {item}
-        <input
-          type="checkbox"
-          name={item}
-          id={`'${item}'`}
-          className="filter-checkbox"
-        />
-      </label>
+      <CourseNameFilterOption
+        key={itemObj.id}
+        {...itemObj}
+        i={i}
+        toggleCheckbox={toggleCourseNameCheckbox}
+      />
     );
   });
 
   // adding courseYear to the sidebar respective field dynamically
-  const courseYearFilterList = courseYearArr.map((item) => {
+
+  const courseYearFilterList = courseYearArr.map((itemObj, i) => {
     return (
-      <label
+      <CourseYearFilterOption
         key={crypto.randomUUID()}
-        htmlFor={`'${item}'`}
-        className="content"
-      >
-        {item}
-        <input
-          type="checkbox"
-          name={item}
-          id={`'${item}'`}
-          className="filter-checkbox"
-        />
-      </label>
+        {...itemObj}
+        i={i}
+        toggleCheckbox={toggleCourseYearCheckbox}
+      />
     );
   });
 
   // adding subjects to the sidebar respective field dynamically
-  const subjectsFilterList = paperTitleArr.map((item) => {
+  const subjectsFilterList = paperTitleArr.map((itemObj, i) => {
     return (
-      <label
-        key={crypto.randomUUID()}
-        htmlFor={`'${item}'`}
-        className="content"
-      >
-        {item}
-        <input
-          type="checkbox"
-          name={item}
-          id={`'${item}'`}
-          className="filter-checkbox"
-        />
-      </label>
+      <SubjectFilterOption
+        key={itemObj.id}
+        {...itemObj}
+        i={i}
+        toggleCheckbox={toggleSubjectCheckbox}
+      />
     );
   });
 
   // adding paperYear to the sidebar respective field dynamically
-  const paperYearFilterList = paperYearArr.map((item) => {
+  const paperYearFilterList = paperYearArr.map((itemObj, i) => {
     return (
-      <label
-        key={crypto.randomUUID()}
-        htmlFor={`'${item}'`}
-        className="content"
-      >
-        {item}
-        <input
-          type="checkbox"
-          name={item}
-          id={`'${item}'`}
-          className="filter-checkbox"
-        />
-      </label>
+      <PaperYearFilterOption
+        key={itemObj.id}
+        {...itemObj}
+        i={i}
+        toggleCheckbox={togglePaperYearCheckbox}
+      />
     );
+  });
+
+  const clearFilters = () => {
+    const resetCourseNameArr = [...courseNameArr];
+    resetCourseNameArr.forEach((element, index) => {
+      element.isChecked = false;
+    });
+    dispatch({
+      type: "CLEAR_FILTERS",
+      payload: {
+        ...filterOptionData,
+        resetCourseNameArr,
+        courseYearArr: [],
+        paperTitleArr: [],
+        paperYearArr: [],
+      },
+    });
+  };
+
+  const papers = papersData.map((paper) => {
+    return <PaperCard key={paper._id} {...paper} />;
+  });
+
+  const papersByCourseName = filteredPapersByCourseName.map((paper) => {
+    return <PaperCard key={crypto.randomUUID()} {...paper} />;
+  });
+
+  const papersByCourseYear = filteredPapersByCourseYear.map((paper) => {
+    return <PaperCard key={crypto.randomUUID()} {...paper} />;
+  });
+
+  const papersBySubject = filteredPapersByPaperTitle.map((paper) => {
+    return <PaperCard key={crypto.randomUUID()} {...paper} />;
+  });
+
+  const papersByPaperYear = filteredPapersByPaperYear.map((paper) => {
+    return <PaperCard key={crypto.randomUUID()} {...paper} />;
   });
 
   useEffect(() => {
     fetchPapers();
+    document.title = "Previous Papers | Papers";
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (throwError) {
+    return <Error msg={errorMsg} />;
+  }
 
   return (
     <section className="papers-section">
@@ -166,7 +258,7 @@ const Papers = () => {
           dispatch({ type: "HIDE_FILTER_SIDEBAR", payload: !showFilterSidebar })
         }
       >
-        {window.innerWidth > "576" ? <FaBars /> : " Filter papers"}
+        {window.innerWidth > "576" ? <FaBars /> : <FaFilter />}
       </button>
       <aside
         className={`${
@@ -194,30 +286,48 @@ const Papers = () => {
             <h3>Courses:</h3>
             {courseNameFilterList}
           </section>
-          <section className="courseYear-section filter-sidebar-section">
-            <h3>Course Year:</h3>
-            {courseYearFilterList}
-          </section>
-          <section className="subject-section filter-sidebar-section">
-            <h3>Subjects:</h3>
-            {subjectsFilterList}
-          </section>
-          <section className="paperYear-section filter-sidebar-section">
-            <h3>Paper Years:</h3>
-            {paperYearFilterList}
-          </section>
+          {courseYearArr.length > 0 && (
+            <section className="courseYear-section filter-sidebar-section">
+              <h3>Course Year:</h3>
+              {courseYearFilterList}
+            </section>
+          )}
+          {paperTitleArr.length > 0 && (
+            <section className="subject-section filter-sidebar-section">
+              <h3>Subjects:</h3>
+              {subjectsFilterList}
+            </section>
+          )}
+          {paperYearArr.length > 0 && (
+            <section className="paperYear-section filter-sidebar-section">
+              <h3>Paper Years:</h3>
+              {paperYearFilterList}
+            </section>
+          )}
         </main>
         <footer className="sidebar-action-btns">
-          <button className="btn sidebar-action-btn clearFilter-btn">
+          <button
+            className="btn sidebar-action-btn clearFilter-btn"
+            onClick={clearFilters}
+          >
             Clear filters
-          </button>
-          <button className="btn sidebar-action-btn applyFilter-btn">
-            Apply filters
           </button>
         </footer>
       </aside>
-      <div className="papers-box">
-        {/* {papersFiltered.length < 1 ? papers : filteredPapers} */}
+      <div
+        className={`${
+          showFilterSidebar ? "papers-box" : "papers-box papers-box-full-width"
+        }`}
+      >
+        {filteredPapersByCourseName.length < 1
+          ? papers
+          : filteredPapersByCourseYear.length < 1
+          ? papersByCourseName
+          : filteredPapersByPaperTitle.length < 1
+          ? papersByCourseYear
+          : filteredPapersByPaperYear.length < 1
+          ? papersBySubject
+          : papersByPaperYear}
       </div>
     </section>
   );

@@ -4,6 +4,14 @@ const backendURL = "http://localhost:5000";
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
+  if (type === "THROW_ERROR") {
+    return {
+      ...state,
+      throwError: true,
+      errorMsg: payload,
+    };
+  }
+
   if (type === "TOGGLE_SM_NAV_LINKS") {
     return {
       ...state,
@@ -104,61 +112,12 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "SET_FILTER_ITEMS") {
-    // console.log("payload ", payload);
+  if (type === "SET_INITIAL_COURSE_NAME_FILTER_ITEMS") {
     return {
       ...state,
-      ...payload,
+      courseNameArr: payload,
     };
   }
-
-  // if (type === "FILTER_PAPERS_BY_COURSE_NAME") {
-  //   const filteredPaperArr = state.papersData.filter((paper) =>
-  //     payload === "" ? paper : paper.courseName === payload
-  //   );
-  //   return {
-  //     ...state,
-  //     papersFiltered: filteredPaperArr,
-  //     arePapersFiltered: true,
-  //   };
-  // }
-
-  // if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
-  //   if (state.papersFiltered.length < 1) {
-  //     return {
-  //       ...state,
-  //       showAlert: true,
-  //       alertMsg: "Select the course first!",
-  //     };
-  //   } else {
-  //     const filteredPaperArr = state.papersFiltered.filter((paper) =>
-  //       payload === "" ? paper : paper.courseYear === payload
-  //     );
-  //     return {
-  //       ...state,
-  //       papersFiltered: filteredPaperArr,
-  //       arePapersFiltered: true,
-  //     };
-  //   }
-  // }
-  // if (type === "FILTER_PAPERS_BY_COURSE_YEAR") {
-  //   if (state.papersFiltered.length < 1) {
-  //     return {
-  //       ...state,
-  //       showAlert: true,
-  //       alertMsg: "Select the course first!",
-  //     };
-  //   } else {
-  //     const filteredPaperArr = state.papersFiltered.filter((paper) =>
-  //       payload === "" ? paper : paper.courseYear === payload
-  //     );
-  //     return {
-  //       ...state,
-  //       papersFiltered: filteredPaperArr,
-  //       arePapersFiltered: true,
-  //     };
-  //   }
-  // }
 
   if (type === "CLEAR_PAPER_FILTERS") {
     return {
@@ -179,6 +138,94 @@ export const reducer = (state, action) => {
     return {
       ...state,
       showFilterSidebar: payload,
+    };
+  }
+
+  if (type === "TOGGLE_FILTER_OPTIONS") {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
+  if (type === "UPDATE_COURSE_YEAR_FILTER_OPTION_DATA") {
+    return {
+      ...state,
+      courseYear: payload,
+    };
+  }
+
+  if (type === "ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ") {
+    const filtered = state.papersData.filter(
+      (paper) => paper.courseName === payload
+    );
+
+    const updatedCourseYearArr = Array.from(
+      new Set(filtered.map((paper) => paper.courseYear))
+    ).map((item) => ({ id: crypto.randomUUID(), item, isChecked: false }));
+
+    return {
+      ...state,
+
+      filteredPapersByCourseName: filtered,
+      courseYearArr: updatedCourseYearArr,
+    };
+  }
+
+  if (type === "ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ") {
+    const filtered = state.filteredPapersByCourseName.filter(
+      (paper) => paper.courseYear === payload
+    );
+
+    const updatedPaperTitleArr = Array.from(
+      new Set(filtered.map((paper) => paper.paperTitle))
+    ).map((item) => ({ id: crypto.randomUUID(), item, isChecked: false }));
+
+    return {
+      ...state,
+      filteredPapersByCourseYear: filtered,
+      paperTitleArr: updatedPaperTitleArr,
+    };
+  }
+
+  if (type === "ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ") {
+    const filtered = state.filteredPapersByCourseYear.filter(
+      (paper) => paper.paperTitle === payload
+    );
+
+    const updatedPaperYearArr = Array.from(
+      new Set(filtered.map((paper) => paper.paperYear))
+    ).map((item) => ({ id: crypto.randomUUID(), item, isChecked: false }));
+
+    return {
+      ...state,
+      filteredPapersByPaperTitle: filtered,
+      paperYearArr: updatedPaperYearArr,
+    };
+  }
+
+  if (type === "ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ") {
+    const filtered = state.filteredPapersByPaperTitle.filter(
+      (paper) => paper.paperYear === payload
+    );
+
+    return {
+      ...state,
+      filteredPapersByPaperYear: filtered,
+      showFilterSidebar: window.innerWidth > "576" ? true : false,
+    };
+  }
+
+  if (type === "CLEAR_FILTERS") {
+    return {
+      ...state,
+      filteredPapersByCourseName: [],
+      filteredPapersByCourseYear: [],
+      filteredPapersByPaperTitle: [],
+      filteredPapersByPaperYear: [],
+      showFilterSidebar: window.innerWidth > "576" ? true : false,
+
+      ...payload,
     };
   }
 };

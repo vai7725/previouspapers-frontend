@@ -7,6 +7,8 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const defaultState = {
+    throwError: false,
+    errorMsg: "",
     loading: true,
     smNavLinksOpen: false,
     backendURL: "http://localhost:5000",
@@ -24,6 +26,12 @@ const AppProvider = ({ children }) => {
     paperTitleArr: [],
     paperYearArr: [],
     papersFiltered: [],
+    markedFilterOptions: [],
+    markedCourseNameFilterOptions: [],
+    filteredPapersByCourseName: [],
+    filteredPapersByCourseYear: [],
+    filteredPapersByPaperTitle: [],
+    filteredPapersByPaperYear: [],
     arePapersFiltered: false,
     showAlert: false,
     alertMsg: "",
