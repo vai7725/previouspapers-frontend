@@ -383,6 +383,18 @@ html {
     Footer styles
     ======= */
 
+.about-section {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* =======
+    Footer styles
+    ======= */
+
 .footer {
   text-align: center;
   background-color: #0c0d1a;
@@ -391,6 +403,11 @@ html {
 
 .footer p {
   color: var(--primary-text-color);
+}
+
+.footer-contact-link {
+  color: #fff;
+  text-decoration: underline;
 }
 
 /* =======
@@ -433,8 +450,8 @@ html {
 }
 
 .toggleSidebar-btn {
-  position: absolute;
-  top: 1%;
+  position: fixed;
+  top: 10%;
   left: 1%;
   padding: 0.3rem 0.5rem;
   background-color: var(--secondary-color);

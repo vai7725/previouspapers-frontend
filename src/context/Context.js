@@ -11,7 +11,7 @@ const AppProvider = ({ children }) => {
     errorMsg: "",
     loading: true,
     smNavLinksOpen: false,
-    backendURL: "http://localhost:5000",
+    backendURL: "https://ppw-backend.cyclic.app/",
     universityData: [],
     inputName: "",
     inputEmail: "",
