@@ -26,14 +26,14 @@ const Header = () => {
           </li>
 
           <li>
-            <a href="#contact-section">Contact</a>
+            <Link to="/contact">Contact</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
           </li>
         </ul>
         <button className="btn ham-btn" onClick={toggleSmNavLinks}>
-          {smNavLinksOpen ? <FaTimes /> : <FaBars />}
+          {smNavLinksOpen ? <FaTimes color="#fff" /> : <FaBars />}
         </button>
       </nav>
       <div
@@ -51,9 +51,9 @@ const Header = () => {
           </li>
 
           <li>
-            <a href="#contact-section" onClick={closeSmNavLinks}>
+            <Link to="/contact" onClick={closeSmNavLinks}>
               Contact
-            </a>
+            </Link>
           </li>
           <li>
             <Link to="/about" onClick={closeSmNavLinks}>

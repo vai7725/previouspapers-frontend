@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { FaBars, FaFilter, FaTimes } from "react-icons/fa";
 import { GlobalContext } from "../../context/Context";
@@ -26,8 +26,6 @@ const Papers = () => {
     paperTitleArr,
     paperYearArr,
     showFilterSidebar,
-    markedFilterOptions,
-    markedCourseNameFilterOptions,
     filteredPapersByCourseName,
     filteredPapersByCourseYear,
     filteredPapersByPaperTitle,
@@ -255,7 +253,10 @@ const Papers = () => {
       <button
         className="btn toggleSidebar-btn"
         onClick={() =>
-          dispatch({ type: "HIDE_FILTER_SIDEBAR", payload: !showFilterSidebar })
+          dispatch({
+            type: "HIDE_FILTER_SIDEBAR",
+            payload: !showFilterSidebar,
+          })
         }
       >
         {window.innerWidth > "576" ? <FaBars /> : <FaFilter />}

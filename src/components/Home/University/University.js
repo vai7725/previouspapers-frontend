@@ -20,6 +20,7 @@ const University = () => {
     <section id="University-section" className="university-section">
       <div className="university-content-section">
         <h1>Select University</h1>
+        {/* <hr /> */}
         <div className="university-card-box">{universityCards}</div>
       </div>
     </section>

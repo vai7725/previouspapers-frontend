@@ -6,7 +6,11 @@ const Card = ({ unName, unDesc, unPath, unImgLink }) => {
     <div className="university-card">
       <img src={unImgLink} alt="university img" className="university-img" />
       <h3 className="university-title">{unName}</h3>
-      <p className="university-desc">{unDesc}</p>
+      <p className="university-desc">
+        {unDesc.length > 140
+          ? unDesc.split("").slice(0, 140).join("").trim() + "..."
+          : unDesc}
+      </p>
       <Link to={`/api/papers${unPath}`} className="btn university-card-btn">
         Select
       </Link>

@@ -73,12 +73,13 @@ export const reducer = (state, action) => {
         submissionMsg:
           "Thanks for connecting with us. We'll contact you shortly via email.",
       };
+    } else {
+      return {
+        ...state,
+        showSubmissionMsg: true,
+        submissionMsg: "Enter form details correctly.",
+      };
     }
-    return {
-      ...state,
-      showSubmissionMsg: true,
-      submissionMsg: "Please provide proper credentials.",
-    };
   }
 
   if (type === "CLEAR_SUBMISSION_MESSAGE") {

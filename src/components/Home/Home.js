@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import Contact from "./Contact";
-import Footer from "./Footer";
 import Main from "./Main";
 import University from "./University/University";
 
@@ -12,8 +10,6 @@ const Home = () => {
     <>
       <Main />
       <University />
-      <Contact />
-      <Footer />
     </>
   );
 };
