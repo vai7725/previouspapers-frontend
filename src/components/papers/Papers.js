@@ -1,15 +1,15 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useParams } from "react-router";
-import { FaBars, FaFilter, FaTimes } from "react-icons/fa";
-import { GlobalContext } from "../../context/Context";
-import PaperCard from "./PaperCard";
-import Loading from "../Loading";
-import { CourseNameFilterOption } from "./FilterOptions";
-import { CourseYearFilterOption } from "./FilterOptions";
-import { SubjectFilterOption } from "./FilterOptions";
-import { PaperYearFilterOption } from "./FilterOptions";
-import Error from "../Error";
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
+import { FaFilter, FaTimes } from 'react-icons/fa';
+import { GlobalContext } from '../../context/Context';
+import PaperCard from './PaperCard';
+import Loading from '../Loading';
+import { CourseNameFilterOption } from './FilterOptions';
+import { CourseYearFilterOption } from './FilterOptions';
+import { SubjectFilterOption } from './FilterOptions';
+import { PaperYearFilterOption } from './FilterOptions';
+import Error from '../Error';
 
 const Papers = () => {
   const { state, dispatch } = GlobalContext();
@@ -33,7 +33,7 @@ const Papers = () => {
   } = state;
 
   const fetchPapers = async () => {
-    dispatch({ type: "HANDLE_LOADING", payload: true });
+    dispatch({ type: 'HANDLE_LOADING', payload: true });
 
     const res = await axios.get(`${backendURL}/api/papers/${university}`);
     const { paperData, msg } = await res.data;
@@ -46,14 +46,14 @@ const Papers = () => {
       const courseNameSet = Array.from(
         new Set(await paperData.map((item) => item.courseName))
       ).map((item) => ({ id: crypto.randomUUID(), item, isChecked: false }));
-      dispatch({ type: "UPDATE_PAPERS_DATA", payload: paperData });
+      dispatch({ type: 'UPDATE_PAPERS_DATA', payload: paperData });
       dispatch({
-        type: "SET_INITIAL_COURSE_NAME_FILTER_ITEMS",
+        type: 'SET_INITIAL_COURSE_NAME_FILTER_ITEMS',
         payload: courseNameSet,
       });
     }
     if (msg) {
-      dispatch({ type: "THROW_ERROR", payload: msg });
+      dispatch({ type: 'THROW_ERROR', payload: msg });
     }
   };
 
@@ -71,7 +71,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "TOGGLE_FILTER_OPTIONS",
+      type: 'TOGGLE_FILTER_OPTIONS',
       payload: {
         ...filterOptionData,
         courseNameArr: updatedCourseNameArr,
@@ -81,7 +81,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ",
+      type: 'ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ',
       payload: item,
     });
   };
@@ -94,7 +94,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "TOGGLE_FILTER_OPTIONS",
+      type: 'TOGGLE_FILTER_OPTIONS',
       payload: {
         ...filterOptionData,
         courseYearArr: updatedCourseYearArr,
@@ -103,7 +103,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ",
+      type: 'ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ',
       payload: item,
     });
   };
@@ -116,7 +116,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "TOGGLE_FILTER_OPTIONS",
+      type: 'TOGGLE_FILTER_OPTIONS',
       payload: {
         ...filterOptionData,
         paperTitleArr: updatedPaperTitleArr,
@@ -124,7 +124,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ",
+      type: 'ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ',
       payload: item,
     });
   };
@@ -136,7 +136,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "TOGGLE_FILTER_OPTIONS",
+      type: 'TOGGLE_FILTER_OPTIONS',
       payload: {
         ...filterOptionData,
         paperYearArr: updatedPaperYearArr,
@@ -144,7 +144,7 @@ const Papers = () => {
     });
 
     dispatch({
-      type: "ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ",
+      type: 'ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ',
       payload: item,
     });
   };
@@ -204,7 +204,7 @@ const Papers = () => {
       element.isChecked = false;
     });
     dispatch({
-      type: "CLEAR_FILTERS",
+      type: 'CLEAR_FILTERS',
       payload: {
         ...filterOptionData,
         resetCourseNameArr,
@@ -237,7 +237,7 @@ const Papers = () => {
 
   useEffect(() => {
     fetchPapers();
-    document.title = "Previous Papers | Papers";
+    document.title = 'Previous Papers | Papers';
   }, []);
 
   if (loading) {
@@ -254,18 +254,18 @@ const Papers = () => {
         className="btn toggleSidebar-btn"
         onClick={() =>
           dispatch({
-            type: "HIDE_FILTER_SIDEBAR",
+            type: 'HIDE_FILTER_SIDEBAR',
             payload: !showFilterSidebar,
           })
         }
       >
-        {window.innerWidth > "576" ? <FaBars /> : <FaFilter />}
+        <FaFilter className="any" />
       </button>
       <aside
         className={`${
           showFilterSidebar
-            ? "filter-sidebar filter-sidebar-show"
-            : "filter-sidebar"
+            ? 'filter-sidebar filter-sidebar-show'
+            : 'filter-sidebar'
         }`}
       >
         <header>
@@ -274,7 +274,7 @@ const Papers = () => {
             className="btn sidebar-btn"
             onClick={() =>
               dispatch({
-                type: "HIDE_FILTER_SIDEBAR",
+                type: 'HIDE_FILTER_SIDEBAR',
                 payload: !showFilterSidebar,
               })
             }
@@ -317,7 +317,7 @@ const Papers = () => {
       </aside>
       <div
         className={`${
-          showFilterSidebar ? "papers-box" : "papers-box papers-box-full-width"
+          showFilterSidebar ? 'papers-box' : 'papers-box papers-box-full-width'
         }`}
       >
         {filteredPapersByCourseName.length < 1

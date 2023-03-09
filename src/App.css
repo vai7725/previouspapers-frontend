@@ -112,7 +112,10 @@ html {
   font-size: 2rem;
   padding: 0.2rem;
   color: var(--primary-text-color);
-  box-shadow: 0 0 4px #000;
+}
+
+.ham-btn path {
+  color: #fff;
 }
 
 .sm-screen-links {
@@ -432,7 +435,6 @@ html {
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
-  /* background: url("./assets/landing-page-background.png") no-repeat fixed; */
   background-color: #d3e4fad7;
 }
 
@@ -450,12 +452,14 @@ html {
 }
 
 .toggleSidebar-btn {
+  color: white;
   position: absolute;
-  top: 0.1%;
+  /* top: 0.1%; */
   left: 1%;
   padding: 0.3rem 0.5rem;
   background-color: var(--secondary-color);
   font-size: 2rem;
+  margin: 0.3rem 0;
 }
 
 .filter-sidebar {
