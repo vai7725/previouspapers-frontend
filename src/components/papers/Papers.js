@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FaArrowAltCircleUp, FaFilter, FaTimes } from 'react-icons/fa';
 import { GlobalContext } from '../../context/Context';
@@ -235,9 +235,17 @@ const Papers = () => {
     return <PaperCard key={crypto.randomUUID()} {...paper} />;
   });
 
+  const [offSet, setOffSet] = useState(0);
+
   useEffect(() => {
     fetchPapers();
     document.title = 'Previous Papers | Papers';
+    const onScroll = () => setOffSet(window.pageYOffset);
+
+    window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const scrollUp = () => {
@@ -337,13 +345,15 @@ const Papers = () => {
           ? papersBySubject
           : papersByPaperYear}
       </div>
-      <button
-        className="btn scrollUp-btn"
-        title="Scroll top"
-        onClick={scrollUp}
-      >
-        <FaArrowAltCircleUp />
-      </button>
+      {offSet > 1800 && (
+        <button
+          className="btn scrollUp-btn"
+          title="Scroll top"
+          onClick={scrollUp}
+        >
+          <FaArrowAltCircleUp />
+        </button>
+      )}
     </section>
   );
 };

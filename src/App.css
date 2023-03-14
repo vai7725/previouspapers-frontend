@@ -634,9 +634,9 @@ html {
 }
 
 .scrollUp-btn {
-  position: sticky;
+  position: fixed;
   right: 2.5%;
-  top: 90%;
+  top: 87%;
   font-size: 3rem;
   margin: 1rem 0;
   box-shadow: 0 0 4px #000;
