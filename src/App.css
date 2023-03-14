@@ -418,7 +418,7 @@ html {
     ======= */
 
 .loading-container {
-  height: 80vh;
+  height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
