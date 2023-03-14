@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const PaperCard = ({
   courseName,
@@ -7,8 +7,7 @@ const PaperCard = ({
   paperURL,
   paperYear,
 }) => {
-  const paperID = paperURL.split("/")[5];
-  console.log(paperID);
+  const paperID = paperURL.split('/')[5];
   return (
     <div className="paper-card" title={paperTitle}>
       <div className="paper-card-img">
@@ -27,7 +26,7 @@ const PaperCard = ({
       <div className="paper-details">
         <h3 className="subject-title">
           {paperTitle.length > 40
-            ? paperTitle.split("").slice(0, 40).join("").trim() + "..."
+            ? paperTitle.split('').slice(0, 40).join('').trim() + '...'
             : paperTitle}
         </h3>
         <p>{courseYear}</p>

@@ -633,6 +633,20 @@ html {
   color: #000;
 }
 
+.scrollUp-btn {
+  position: sticky;
+  right: 2.5%;
+  top: 90%;
+  font-size: 3rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 4px #000;
+  border-radius: 50%;
+}
+
+.scrollUp-btn path {
+  color: var(--primary-color);
+}
+
 /* =======
     Error component styles
     ======= */

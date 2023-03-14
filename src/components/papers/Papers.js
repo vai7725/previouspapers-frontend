@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { FaFilter, FaTimes } from 'react-icons/fa';
+import { FaArrowAltCircleUp, FaFilter, FaTimes } from 'react-icons/fa';
 import { GlobalContext } from '../../context/Context';
 import PaperCard from './PaperCard';
 import Loading from '../Loading';
@@ -240,6 +240,13 @@ const Papers = () => {
     document.title = 'Previous Papers | Papers';
   }, []);
 
+  const scrollUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -330,6 +337,13 @@ const Papers = () => {
           ? papersBySubject
           : papersByPaperYear}
       </div>
+      <button
+        className="btn scrollUp-btn"
+        title="Scroll top"
+        onClick={scrollUp}
+      >
+        <FaArrowAltCircleUp />
+      </button>
     </section>
   );
 };
