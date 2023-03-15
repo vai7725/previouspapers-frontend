@@ -1,8 +1,8 @@
-import React from "react";
-import logo from "../assets/logo.png";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { GlobalContext } from "../context/Context";
+import React from 'react';
+import logo from '../assets/logo.png';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { GlobalContext } from '../context/Context';
 
 const Header = () => {
   const { state, dispatch } = GlobalContext();
@@ -10,16 +10,18 @@ const Header = () => {
 
   const toggleSmNavLinks = () => {
     return dispatch({
-      type: "TOGGLE_SM_NAV_LINKS",
+      type: 'TOGGLE_SM_NAV_LINKS',
       payload: smNavLinksOpen,
     });
   };
-  const closeSmNavLinks = () => dispatch({ type: "CLOSE_SM_NAV_LINKS" });
+  const closeSmNavLinks = () => dispatch({ type: 'CLOSE_SM_NAV_LINKS' });
 
   return (
     <header className="header">
       <nav className="navbar">
-        <img src={logo} alt="logo" className="logo" />
+        <Link to="/">
+          <img src={logo} alt="logo" className="logo" />
+        </Link>
         <ul className="nav-links">
           <li>
             <Link to="/">Home</Link>
@@ -39,8 +41,8 @@ const Header = () => {
       <div
         className={`${
           smNavLinksOpen
-            ? "sm-screen-links-show sm-screen-links"
-            : "sm-screen-links"
+            ? 'sm-screen-links-show sm-screen-links'
+            : 'sm-screen-links'
         }`}
       >
         <ul className="nav-links-sm">
