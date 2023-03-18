@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const backendURL = 'http://localhost:5000';
-
 export const reducer = (state, action) => {
   const { type, payload } = action;
   if (type === 'THROW_ERROR') {
@@ -93,7 +91,7 @@ export const reducer = (state, action) => {
         state.inputMessage) !== ''
     ) {
       axios
-        .post(`${backendURL}/contact`, contactInfo)
+        .post(`${state.backendURL}/contact`, contactInfo)
         .then((res) => res.data)
         .catch((err) => console.log(err.message));
 
