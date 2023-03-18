@@ -7,11 +7,14 @@ const About = () => {
       <div className="about-box">
         <h1>About Us</h1>
         <p>
-          The "previouspapers.netlify.app" is built to help students who are
-          pursuing different courses in different universities of Rajasthan and
-          can't understand the pattern of the question paper. From here students
-          can download previous year questions papers related to their courses
-          and universities for free and prepare for their further college exams.
+          Our website is a valuable resource for students looking to ace their
+          exams. We provide a vast collection of previous year question papers
+          across different educational boards and universities. By accessing
+          these papers, students can get a clear understanding of the exam
+          pattern, important topics, and expected questions. This enables them
+          to prepare better and perform well in their exams. Our user-friendly
+          interface makes it easy to navigate and find relevant papers. Try us
+          out and see the difference in your performance!
         </p>
       </div>
       <div className="about-box">

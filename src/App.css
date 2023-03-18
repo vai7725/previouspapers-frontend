@@ -158,6 +158,57 @@ html {
 }
 
 /* =======
+    Welcome screen styles
+    ======= */
+
+.welcome-screen {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: +3;
+}
+
+.welcome-box {
+  height: 350px;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 0 4px 1px var(--primary-color);
+  background-color: var(--primary-text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.welcome-box > h1 {
+  color: var(--primary-color);
+}
+
+.welcomeBox-btn {
+  border: 2px solid var(--primary-color);
+  background-color: #cfd1ff;
+  color: #000;
+  width: 90%;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-screen-hide {
+  display: none;
+}
+
+/* =======
     Landing page styles
     ======= */
 

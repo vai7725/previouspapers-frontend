@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const backendURL = "http://localhost:5000";
+const backendURL = 'http://localhost:5000';
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
-  if (type === "THROW_ERROR") {
+  if (type === 'THROW_ERROR') {
     return {
       ...state,
       throwError: true,
@@ -12,44 +12,74 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "TOGGLE_SM_NAV_LINKS") {
+  if (type === 'WELCOME_SCREEN') {
+    if (payload) {
+      return {
+        ...state,
+        userHitForFirstTime: false,
+      };
+    } else {
+      return {
+        ...state,
+        userHitForFirstTime: true,
+      };
+    }
+  }
+
+  if (type === 'SET_USER_VISITED') {
+    axios
+      .put(`${state.backendURL}/updatetraffic`)
+      .then((res) =>
+        localStorage.setItem(
+          'visitCredentials',
+          JSON.stringify({ visited: true })
+        )
+      )
+      .catch((err) => console.log(err));
+    return {
+      ...state,
+      userHitForFirstTime: false,
+    };
+  }
+
+  if (type === 'TOGGLE_SM_NAV_LINKS') {
     return {
       ...state,
       smNavLinksOpen: !payload,
     };
   }
-  if (type === "CLOSE_SM_NAV_LINKS") {
+  if (type === 'CLOSE_SM_NAV_LINKS') {
     return {
       ...state,
       smNavLinksOpen: false,
     };
   }
-  if (type === "HANDLE_FORM_NAME") {
+  if (type === 'HANDLE_FORM_NAME') {
     return {
       ...state,
       inputName: payload,
     };
   }
-  if (type === "HANDLE_FORM_EMAIL") {
+  if (type === 'HANDLE_FORM_EMAIL') {
     return {
       ...state,
       inputEmail: payload,
     };
   }
-  if (type === "HANDLE_FORM_UNIVERSITY") {
+  if (type === 'HANDLE_FORM_UNIVERSITY') {
     return {
       ...state,
       inputUniversity: payload,
     };
   }
-  if (type === "HANDLE_FORM_MESSAGE") {
+  if (type === 'HANDLE_FORM_MESSAGE') {
     return {
       ...state,
       inputMessage: payload,
     };
   }
 
-  if (type === "STORE_CONTACT_INFO") {
+  if (type === 'STORE_CONTACT_INFO') {
     const contactInfo = {
       name: state.inputName,
       email: state.inputEmail,
@@ -60,7 +90,7 @@ export const reducer = (state, action) => {
       (state.inputName &&
         state.inputEmail &&
         state.inputUniversity &&
-        state.inputMessage) !== ""
+        state.inputMessage) !== ''
     ) {
       axios
         .post(`${backendURL}/contact`, contactInfo)
@@ -77,20 +107,20 @@ export const reducer = (state, action) => {
       return {
         ...state,
         showSubmissionMsg: true,
-        submissionMsg: "Enter form details correctly.",
+        submissionMsg: 'Enter form details correctly.',
       };
     }
   }
 
-  if (type === "CLEAR_SUBMISSION_MESSAGE") {
+  if (type === 'CLEAR_SUBMISSION_MESSAGE') {
     return {
       ...state,
       showSubmissionMsg: false,
-      submissionMsg: "",
+      submissionMsg: '',
     };
   }
 
-  if (type === "UPDATE_UNIVERSITY_DATA") {
+  if (type === 'UPDATE_UNIVERSITY_DATA') {
     return {
       ...state,
       universityData: payload,
@@ -98,14 +128,14 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "HANDLE_LOADING") {
+  if (type === 'HANDLE_LOADING') {
     return {
       ...state,
       loading: payload,
     };
   }
 
-  if (type === "UPDATE_PAPERS_DATA") {
+  if (type === 'UPDATE_PAPERS_DATA') {
     return {
       ...state,
       papersData: payload,
@@ -113,14 +143,14 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "SET_INITIAL_COURSE_NAME_FILTER_ITEMS") {
+  if (type === 'SET_INITIAL_COURSE_NAME_FILTER_ITEMS') {
     return {
       ...state,
       courseNameArr: payload,
     };
   }
 
-  if (type === "CLEAR_PAPER_FILTERS") {
+  if (type === 'CLEAR_PAPER_FILTERS') {
     return {
       ...state,
       papersFiltered: [],
@@ -128,35 +158,35 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "HIDE_ALERT") {
+  if (type === 'HIDE_ALERT') {
     return {
       ...state,
       showAlert: false,
     };
   }
 
-  if (type === "HIDE_FILTER_SIDEBAR") {
+  if (type === 'HIDE_FILTER_SIDEBAR') {
     return {
       ...state,
       showFilterSidebar: payload,
     };
   }
 
-  if (type === "TOGGLE_FILTER_OPTIONS") {
+  if (type === 'TOGGLE_FILTER_OPTIONS') {
     return {
       ...state,
       ...payload,
     };
   }
 
-  if (type === "UPDATE_COURSE_YEAR_FILTER_OPTION_DATA") {
+  if (type === 'UPDATE_COURSE_YEAR_FILTER_OPTION_DATA') {
     return {
       ...state,
       courseYear: payload,
     };
   }
 
-  if (type === "ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ") {
+  if (type === 'ADD_COURSE_NAME_VALUE_FILTER_OPTION_OBJ') {
     const filtered = state.papersData.filter(
       (paper) => paper.courseName === payload
     );
@@ -173,7 +203,7 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ") {
+  if (type === 'ADD_COURSE_YEAR_VALUE_FILTER_OPTION_OBJ') {
     const filtered = state.filteredPapersByCourseName.filter(
       (paper) => paper.courseYear === payload
     );
@@ -189,7 +219,7 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ") {
+  if (type === 'ADD_PAPER_TITLE_VALUE_FILTER_OPTION_OBJ') {
     const filtered = state.filteredPapersByCourseYear.filter(
       (paper) => paper.paperTitle === payload
     );
@@ -205,7 +235,7 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (type === "ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ") {
+  if (type === 'ADD_PAPER_YEAR_VALUE_FILTER_OPTION_OBJ') {
     const filtered = state.filteredPapersByPaperTitle.filter(
       (paper) => paper.paperYear === payload
     );
@@ -213,18 +243,18 @@ export const reducer = (state, action) => {
     return {
       ...state,
       filteredPapersByPaperYear: filtered,
-      showFilterSidebar: window.innerWidth > "576" ? true : false,
+      showFilterSidebar: window.innerWidth > '576' ? true : false,
     };
   }
 
-  if (type === "CLEAR_FILTERS") {
+  if (type === 'CLEAR_FILTERS') {
     return {
       ...state,
       filteredPapersByCourseName: [],
       filteredPapersByCourseYear: [],
       filteredPapersByPaperTitle: [],
       filteredPapersByPaperYear: [],
-      showFilterSidebar: window.innerWidth > "576" ? true : false,
+      showFilterSidebar: window.innerWidth > '576' ? true : false,
 
       ...payload,
     };
