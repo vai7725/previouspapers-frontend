@@ -9,7 +9,8 @@ const Home = () => {
   const { userHitForFirstTime } = state;
 
   useEffect(() => {
-    document.title = 'Previous Papers | Home';
+    document.title =
+      'Previous Year Question Papers | mdsuonline.com | previouspapers.com | mdsuexam.org | mdsuajmer.ac.in ';
   }, []);
   return (
     <>

@@ -239,7 +239,7 @@ const Papers = () => {
 
   useEffect(() => {
     fetchPapers();
-    document.title = 'Previous Papers | Papers';
+    document.title = `Previous year question papers | ${university} old papers | ${university} paper pattern | ${university} b sc bed old papers | ${university} ba bed old papers | ${university} previous year questions papers`;
     const onScroll = () => setOffSet(window.pageYOffset);
 
     window.removeEventListener('scroll', onScroll);
