@@ -1,5 +1,5 @@
-import React from "react";
-import landingImg from "../../assets/landing img.png";
+import React from 'react';
+import landingImg from '../../assets/landing img.webp';
 
 const Main = () => {
   return (

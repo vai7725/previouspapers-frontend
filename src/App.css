@@ -220,7 +220,7 @@ html {
 .landing-page::before {
   content: '';
   position: absolute;
-  background: url('./assets/landing-page-background.png') no-repeat fixed
+  background: url('./assets/landing-page-background.webp') no-repeat fixed
     center/cover;
   width: 100%;
   height: 100%;
@@ -593,7 +593,7 @@ html {
 .papers-section::before {
   content: '';
   position: absolute;
-  background: url('./assets/landing-page-background.png') no-repeat fixed
+  background: url('./assets/landing-page-background.webp') no-repeat fixed
     center/cover;
   width: 100%;
   height: 100%;
