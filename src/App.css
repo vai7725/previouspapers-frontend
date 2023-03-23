@@ -10,7 +10,7 @@
   --secondary-color: #8f96fe;
   --primary-text-color: #f7fbff;
 
-  --transition-slow: all 200ms linear;
+  --transition-slow: all 300ms linear;
   --transition-medium: all 100ms linear;
   --transition-fast: all 50ms linear;
 }
@@ -120,15 +120,16 @@ html {
 
 .sm-screen-links {
   width: 100%;
-  /* height: 150px; */
   position: relative;
-  transform: translateX(-200%);
+  transform: scale(0);
   transition: var(--transition-slow);
+  visibility: hidden;
   z-index: 2;
   border-radius: 4px;
 }
 .sm-screen-links-show {
-  transform: translateX(0);
+  transform: scale(1);
+  visibility: visible;
 }
 
 .sm-screen-links::before {
@@ -154,7 +155,9 @@ html {
 
 .nav-links-sm li a {
   font-size: 1.3rem;
-  color: #545454;
+  color: #313131;
+  width: 100%;
+  display: block;
 }
 
 /* =======
@@ -604,11 +607,9 @@ html {
 }
 
 .toggleSidebar-btn {
-  color: white;
   position: absolute;
-  /* top: 0.1%; */
   left: 1%;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem 0.3rem;
   background-color: var(--secondary-color);
   font-size: 2rem;
   margin: 0.3rem 0;
@@ -711,6 +712,20 @@ html {
 }
 
 .papers-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.papers-box > h1 {
+  font-size: 2rem;
+  margin: 0.5rem auto;
+  text-align: center;
+  width: fit-content;
+}
+
+.papers {
   width: 95%;
   margin: auto;
   min-height: 100vh;

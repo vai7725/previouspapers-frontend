@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FaArrowAltCircleUp, FaFilter, FaTimes } from 'react-icons/fa';
+import { BsFilterLeft } from 'react-icons/bs';
 import { GlobalContext } from '../../context/Context';
 import PaperCard from './PaperCard';
 import Loading from '../Loading';
@@ -274,7 +275,7 @@ const Papers = () => {
           })
         }
       >
-        <FaFilter className="any" />
+        <BsFilterLeft />
       </button>
       <aside
         className={`${
@@ -335,15 +336,18 @@ const Papers = () => {
           showFilterSidebar ? 'papers-box' : 'papers-box papers-box-full-width'
         }`}
       >
-        {filteredPapersByCourseName.length < 1
-          ? papers
-          : filteredPapersByCourseYear.length < 1
-          ? papersByCourseName
-          : filteredPapersByPaperTitle.length < 1
-          ? papersByCourseYear
-          : filteredPapersByPaperYear.length < 1
-          ? papersBySubject
-          : papersByPaperYear}
+        <h1> {university.toUpperCase()} Question Papers</h1>
+        <div className="papers">
+          {filteredPapersByCourseName.length < 1
+            ? papers
+            : filteredPapersByCourseYear.length < 1
+            ? papersByCourseName
+            : filteredPapersByPaperTitle.length < 1
+            ? papersByCourseYear
+            : filteredPapersByPaperYear.length < 1
+            ? papersBySubject
+            : papersByPaperYear}
+        </div>
       </div>
       {offSet > 1800 && (
         <button
