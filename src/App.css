@@ -608,6 +608,7 @@ html {
 
 .toggleSidebar-btn {
   position: absolute;
+  top: 5rem;
   left: 1%;
   padding: 0.3rem 0.3rem;
   background-color: var(--secondary-color);
@@ -722,7 +723,7 @@ html {
   font-size: 2rem;
   margin: 0.5rem auto;
   text-align: center;
-  width: fit-content;
+  width: 80%;
 }
 
 .papers {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { FaArrowAltCircleUp, FaFilter, FaTimes } from 'react-icons/fa';
+import { FaArrowAltCircleUp, FaTimes } from 'react-icons/fa';
 import { BsFilterLeft } from 'react-icons/bs';
 import { GlobalContext } from '../../context/Context';
 import PaperCard from './PaperCard';
