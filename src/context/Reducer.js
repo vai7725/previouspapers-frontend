@@ -100,6 +100,10 @@ export const reducer = (state, action) => {
         showSubmissionMsg: true,
         submissionMsg:
           "Thanks for connecting with us. We'll contact you shortly via email.",
+        inputName: '',
+        inputEmail: '',
+        inputUniversity: '',
+        inputMessage: '',
       };
     } else {
       return {
