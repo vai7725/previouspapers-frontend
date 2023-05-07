@@ -36,14 +36,20 @@ const AppProvider = ({ children }) => {
     arePapersFiltered: false,
     showAlert: false,
     alertMsg: '',
+    loaderProgress: 0,
   };
 
   const [state, dispatch] = useReducer(reducer, defaultState);
 
   const fetchUniversity = async () => {
     dispatch({ type: 'HANDLE_LOADING', payload: true });
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 30 });
     const res = await axios.get(`${state.backendURL}/fetchuniversities`);
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 50 });
+
     const data = await res.data;
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 70 });
+
     // console.log(data.universityData);
     const { universityData } = data;
     if (universityData) {
@@ -57,6 +63,7 @@ const AppProvider = ({ children }) => {
         payload: [],
       });
     }
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 100 });
   };
 
   const identifyNewUser = () => {

@@ -257,4 +257,10 @@ export const reducer = (state, action) => {
       ...payload,
     };
   }
+  if (type === 'SET_PROGRESS_BAR') {
+    return {
+      ...state,
+      loaderProgress: payload,
+    };
+  }
 };

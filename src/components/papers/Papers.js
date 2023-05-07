@@ -35,9 +35,11 @@ const Papers = () => {
 
   const fetchPapers = async () => {
     dispatch({ type: 'HANDLE_LOADING', payload: true });
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 30 });
 
     const res = await axios.get(`${backendURL}/api/papers/${university}`);
     const { paperData, msg } = await res.data;
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 50 });
 
     // console.log(msg);
 
@@ -53,9 +55,12 @@ const Papers = () => {
         payload: courseNameSet,
       });
     }
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 70 });
+
     if (msg) {
       dispatch({ type: 'THROW_ERROR', payload: msg });
     }
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: 100 });
   };
 
   const filterOptionData = {
