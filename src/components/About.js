@@ -1,5 +1,7 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
+import axios from 'axios';
 
 const About = () => {
   return (
@@ -22,7 +24,7 @@ const About = () => {
         <div className="about-creator-box">
           <div className="about-creator-card">
             <img
-              src="https://media.licdn.com/dms/image/D4D03AQHJHUCSRF6VAA/profile-displayphoto-shrink_800_800/0/1677689728343?e=1684368000&v=beta&t=8ckA1vyeDzfKNvdIXncUNtXjjS0bFWSy3ozOp0mtPfo"
+              src="https://avatars.githubusercontent.com/u/107029078?v=4"
               alt="Creator img"
             />
             <h3>Vaibhav Prajapat</h3>
@@ -38,7 +40,7 @@ const About = () => {
           </div>
           <div className="about-creator-card">
             <img
-              src="https://media.licdn.com/dms/image/D4D03AQH81lxz84B4ZQ/profile-displayphoto-shrink_800_800/0/1675145695216?e=1684368000&v=beta&t=QFkqSvBC7Yht8YnrZiJoJ62i-I8wggqSXomZywd1xbU"
+              src="https://media.licdn.com/dms/image/D4D03AQH81lxz84B4ZQ/profile-displayphoto-shrink_400_400/0/1675145695216?e=1690416000&v=beta&t=OYWwgZ4VB4h-XUWWX_MKkGR8mCmWA1vhuCXu73aCSdc"
               alt="Creator img"
             />
             <h3>Abhishek Bansal</h3>
