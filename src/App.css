@@ -1,13 +1,13 @@
 /* =======
     imports
     ======= */
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root {
   font-size: 16px;
-  --primary-color: #5a4bda;
-  --secondary-color: #8f96fe;
+  --primary-color: #4f46e5;
+  --secondary-color: #a5b4fc;
   --primary-text-color: #f7fbff;
 
   --transition-slow: all 300ms linear;
@@ -120,6 +120,10 @@ html {
   color: var(--primary-text-color);
 }
 
+.ham-btn:active{
+  transform: rotate(50deg);
+}
+
 .ham-btn path {
   color: #fff;
 }
@@ -142,6 +146,8 @@ html {
 
 
 .nav-links-sm {
+  position: absolute;
+  right: 0;
   padding: 1rem 1rem;
   margin: .3rem .5rem;
   width: 70%;
@@ -185,11 +191,121 @@ html {
   opacity: 1;
 }
 
+.ham-login{
+  display: flex;
+  /* border: 2px solid black; */
+}
+
 .login-btn{
-  background-color: var(--primary-text-color);
-  color: var(--primary-color);
-  padding: .3rem .8rem;
+  border: 1px solid var(--primary-text-color);
+  padding: .1rem .8rem;
   font-size: 1rem;
+  margin: 0 .5rem;
+  cursor: pointer;
+}
+
+.login-btn:hover{
+  background-color: #fff;
+  color: var(--primary-color);
+}
+
+/* =======
+    Log in component style
+    ======= */
+
+.form-section{
+  min-height: calc(100vh - 70px);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('./assets/form_bg_sm.webp') center no-repeat fixed;
+  background-size: 200% 100%;
+}
+.form{
+  box-shadow: 0 0 10px .1px #00000031;
+  padding: 2.5rem 1rem;
+  border-radius: 4px;
+  width: 100%;
+  margin: 1rem 1rem;
+  max-width: 500px;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+}
+
+.form-main{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #676767;
+  margin: .5rem 0;
+}
+
+.form-label > span {
+  color: #676767;
+}
+.form-label > span:hover {
+  color: #676767;
+}
+
+.form-inp{
+  margin-bottom: 1rem;
+  padding: .8rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid #000;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.form-inp::placeholder{
+  color: #42424265;
+}
+
+.form_forgot_password_btn{
+  color: var(--primary-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+.form_forgot_password_btn:hover{
+  color: #676767;
+}
+
+.form-inp:focus{
+  border: 1px solid var(--primary-color);
+}
+
+.form_heading > h2{
+  color: #000;
+  margin-bottom: 1rem;
+}
+.form-btn{
+  background-color: var(--primary-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+
+}
+
+.form_notation_btn{
+  color: var(--primary-color);
+  margin: 0 2px;
+}
+
+.form-notation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* =======
@@ -381,58 +497,22 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d3e4fa;
   padding: 1rem 0.5rem;
 }
 
-.contact-form h1,
-.contact-form h2,
-.contact-form p {
-  text-align: center;
-}
 
-.contact-form h1,
-.contact-form h2 {
-  color: var(--primary-color);
-}
-.contact-form p {
-  font-size: 0.8rem;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-.contact-form {
-  background-color: var(--primary-text-color);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  /* max-width: 400px; */
-  margin: auto;
-  padding: 1rem 0.5rem;
-}
-
-.form-section {
+.form-partition {
   padding: 0.3rem;
   margin: 0.2rem 0;
   border-radius: 3px;
-  border: 1px solid black;
   width: 100%;
 }
 
-.form-section > legend {
+.form-partition > legend {
   font-size: 0.8rem;
 }
 
-.contact-form-main {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0.5rem;
-}
+
 
 .form-label {
   font-size: 0.9rem;
@@ -478,7 +558,7 @@ html {
   width: 92%;
 }
 
-.form-btn {
+.contact-form-btn {
   background-color: var(--primary-color);
   width: 100%;
   padding: 0.5rem;
@@ -490,13 +570,13 @@ html {
 /* =======
     Earn styles
     ======= */
-.earn-section {
-  min-height: calc(100vh - 70px);
-  flex-direction: column;
+.contribute-section {
+  padding: 1rem 0;
 }
 
 .check-label {
   margin-bottom: 0.5rem;
+  justify-content: flex-start;
 }
 
 .tnc_check {
@@ -509,12 +589,9 @@ html {
   display: none;
 }
 
-.paperInput-label {
-  /* border: 1px solid black; */
-  margin-top: 1rem;
-  font-size: 1rem;
-  justify-content: center;
-  box-shadow: 0 0 2px 1px var(--secondary-color);
+.contribute-btn{
+  background-color: #8f96fe;
+  color: #000;
 }
 
 /* =======
@@ -528,6 +605,9 @@ html {
   justify-content: center;
   flex-direction: column;
   padding: 1rem;
+  background: url('./assets/curved_bg.webp') center fixed no-repeat;
+  background-size: 150% 100%;
+  background-blend-mode: darken;
 }
 
 .about-box {
@@ -983,12 +1063,24 @@ html {
     width: 90%;
   }
 
+  .about-section{
+    background-size: 100% 100%;
+  }
+
   .about-box > h1 {
     font-size: 2.5rem;
   }
 
   .credits-list {
     font-size: 1.2rem;
+  }
+  .login-btn{
+    padding: .3rem .8rem;
+  }
+  .form-section{
+  background: url('./assets/form_bg.webp') center no-repeat fixed;
+
+    background-size: 100% 100%;
   }
 }
 

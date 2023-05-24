@@ -9,7 +9,9 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import LoadingBar from 'react-top-loading-bar';
 import { GlobalContext } from './context/Context';
-import Earn from './components/earn/Earn';
+import Earn from './components/earn/Contribute';
+import Login from './components/login/Login';
+import Signup from './components/login/Signup';
 
 function App() {
   const { state, dispatch } = GlobalContext();
@@ -29,6 +31,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/contribute" element={<Earn />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/api/papers/:university" element={<Papers />} />
         <Route path="/*" element={<Error />} />
       </Routes>

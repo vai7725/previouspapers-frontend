@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { GlobalContext } from "../context/Context";
+import React, { useEffect } from 'react';
+import { GlobalContext } from '../context/Context';
 
 const Contact = () => {
   const { state, dispatch } = GlobalContext();
@@ -14,11 +14,11 @@ const Contact = () => {
 
   const storeContactInfo = (e) => {
     e.preventDefault();
-    dispatch({ type: "STORE_CONTACT_INFO" });
+    dispatch({ type: 'STORE_CONTACT_INFO' });
   };
 
   const clearSubmissionMsg = () => {
-    dispatch({ type: "CLEAR_SUBMISSION_MESSAGE" });
+    dispatch({ type: 'CLEAR_SUBMISSION_MESSAGE' });
   };
 
   useEffect(() => {
@@ -27,28 +27,32 @@ const Contact = () => {
     }, 3000);
   });
 
+  useEffect(() => {
+    document.title = 'Contact | Previous Papers';
+  }, []);
+
   return (
-    <section className="contact-section" id="contact-section">
-      <form className="contact-form">
-        <header className="heading">
-          <h1>Contact us</h1>
+    <section className="form-section" id="contact-section">
+      <form className="form">
+        <header className="form_heading">
+          <h2>Contact us</h2>
           {/* <p>
             Got any problem related to papers or website? Get in touch with us
             and we'll get connected shortly via email.
           </p> */}
         </header>
-        <main className="contact-form-main">
+        <main className="form-main">
           <label className="form-label" htmlFor="name">
             Name:
           </label>
           <input
-            className="inp"
+            className="form-inp"
             type="text"
             placeholder="Enter your name"
             value={inputName}
             id="name"
             onChange={(e) =>
-              dispatch({ type: "HANDLE_FORM_NAME", payload: e.target.value })
+              dispatch({ type: 'HANDLE_FORM_NAME', payload: e.target.value })
             }
           />
 
@@ -56,27 +60,27 @@ const Contact = () => {
             Email:
           </label>
           <input
-            className="inp"
+            className="form-inp"
             type="email"
             id="email"
             placeholder="Enter your email"
             value={inputEmail}
             onChange={(e) =>
-              dispatch({ type: "HANDLE_FORM_EMAIL", payload: e.target.value })
+              dispatch({ type: 'HANDLE_FORM_EMAIL', payload: e.target.value })
             }
           />
           <label className="form-label" htmlFor="university">
             University:
           </label>
           <input
-            className="inp"
+            className="form-inp"
             type="text"
             id="university"
             placeholder="Enter university name"
             value={inputUniversity}
             onChange={(e) =>
               dispatch({
-                type: "HANDLE_FORM_UNIVERSITY",
+                type: 'HANDLE_FORM_UNIVERSITY',
                 payload: e.target.value,
               })
             }
@@ -86,7 +90,7 @@ const Contact = () => {
             Message:
           </label>
           <textarea
-            className="inp msg-inp"
+            className="form-inp msg-inp"
             id="msg"
             cols="30"
             rows="10"
@@ -94,7 +98,7 @@ const Contact = () => {
             value={inputMessage}
             onChange={(e) =>
               dispatch({
-                type: "HANDLE_FORM_MESSAGE",
+                type: 'HANDLE_FORM_MESSAGE',
                 payload: e.target.value,
               })
             }

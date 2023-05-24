@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HiOutlineUpload } from 'react-icons/hi';
 
 const Earn = () => {
+  useEffect(() => {
+    document.title = 'Contribute and Earn | Previous Papers';
+  }, []);
   return (
-    <section className="earn-section contact-section">
-      <form action="" className="contact-form paper-upload-form">
-        <header>
-          <h2>Upload papers and earn</h2>
-          <p>
-            The price of paper will depend <br /> on quality of pdf file.
-          </p>
+    <section className="form-section contribute-section">
+      <form action="" className="form">
+        <header className="form_heading">
+          <h2>Contribute and get paid!</h2>
         </header>
-        <main className="contact-form-main">
-          <fieldset className="form-section">
+        <main className="form-main">
+          <fieldset className="form-partition form-main">
             <legend>User details:</legend>
             <label className="form-label" htmlFor="uploadPaperFormName">
               Name:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormName"
               type="text"
               placeholder="Enter your name"
@@ -27,7 +27,7 @@ const Earn = () => {
               Email:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormEmail"
               type="email"
               placeholder="example@abc.com"
@@ -36,19 +36,19 @@ const Earn = () => {
               UPI Number:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormUpiNum"
               type="number"
               placeholder="91xxxxxx90"
             />
           </fieldset>
-          <fieldset className="form-section">
+          <fieldset className="form-partition form-main">
             <legend>Paper details:</legend>
             <label className="form-label" htmlFor="uploadPaperFormUniversity">
               Enter university name:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormUniversity"
               type="text"
               placeholder="Enter university"
@@ -57,7 +57,7 @@ const Earn = () => {
               Course name:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormCourse"
               type="text"
               placeholder="B.sc / B.A"
@@ -66,7 +66,7 @@ const Earn = () => {
               Course Year:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormCourseYear"
               type="text"
               placeholder="1st year / 2nd year"
@@ -75,29 +75,29 @@ const Earn = () => {
               Subject:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormPaperTitle"
               type="text"
-              placeholder="Enter subject mentioned in the paper"
+              placeholder="As mentioned in the paper."
             />
             <label className="form-label" htmlFor="uploadPaperFormPaperYear">
               Paper Year:
             </label>
             <input
-              className="inp"
+              className="form-inp"
               id="uploadPaperFormPaperYear"
               type="text"
               placeholder="2023 / 2022"
             />
           </fieldset>
           <label
-            className="form-label inp btn paperInput-label"
+            className="btn form-btn contribute-btn"
             htmlFor="uploadPaperFormPaperFile"
           >
             <HiOutlineUpload /> Upload file
           </label>
           <input
-            className="inp paperInput"
+            className="paperInput"
             id="uploadPaperFormPaperFile"
             type="file"
             placeholder="2023 / 2022"
@@ -114,6 +114,9 @@ const Earn = () => {
             I accept all the T&C.
           </label>
           <button className="btn form-btn">Sumbit</button>
+          <span className="form-notation">
+            The better the PDF file, the higher the paper price!
+          </span>
         </main>
       </form>
     </section>

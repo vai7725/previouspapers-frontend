@@ -1,12 +1,14 @@
 import React from 'react';
 import logo from '../assets/logo.webp';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { RxCross2 } from 'react-icons/rx';
+import { RxHamburgerMenu } from 'react-icons/rx';
 import { Link, NavLink } from 'react-router-dom';
 import { GlobalContext } from '../context/Context';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiHelpCircle } from 'react-icons/bi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { BsArrowRight } from 'react-icons/bs';
+import { FiUpload } from 'react-icons/fi';
 
 const Header = () => {
   const { state, dispatch } = GlobalContext();
@@ -31,9 +33,6 @@ const Header = () => {
   return (
     <header className="header">
       <nav className="navbar">
-        <button className="btn ham-btn" onClick={toggleSmNavLinks}>
-          {smNavLinksOpen ? <FaTimes /> : <FaBars />}
-        </button>
         <Link to="/">
           <img src={logo} alt="logo" className="logo" />
         </Link>
@@ -54,15 +53,20 @@ const Header = () => {
             </NavLink>
           </li>
 
-          {/* <li>
+          <li>
             <NavLink style={activeStyle} to="/contribute">
-              Upload papers
+              Contribute
             </NavLink>
-          </li> */}
+          </li>
         </ul>
-        {/* <button className="btn login-btn">
-          <FiLogIn className="" />
-        </button> */}
+        <div className="ham-login">
+          <Link to="/login" className="btn login-btn">
+            Log In
+          </Link>
+          <button className="btn ham-btn" onClick={toggleSmNavLinks}>
+            {smNavLinksOpen ? <RxCross2 /> : <RxHamburgerMenu />}
+          </button>
+        </div>
       </nav>
       <div
         className={`${
@@ -104,7 +108,7 @@ const Header = () => {
             </NavLink>
           </li>
 
-          {/* <li>
+          <li>
             <NavLink
               style={activeStyle}
               to="/contribute"
@@ -112,11 +116,11 @@ const Header = () => {
             >
               <span className="nav-icons">
                 <FiUpload className="nav-icon" />
-                Upload papers
+                Contribute
               </span>
               <BsArrowRight className="nav-arrow" />
             </NavLink>
-          </li> */}
+          </li>
         </ul>
       </div>
     </header>
