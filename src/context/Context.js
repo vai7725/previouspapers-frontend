@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { reducer } from './Reducer';
-import { getUser, setUserLoggedIn } from '../helper/helperFns';
+import { logProvider } from '../helper/tinyFns';
 
 const serverURI = process.env.REACT_APP_SERVER_URI;
 const AppContext = React.createContext();
@@ -95,16 +95,9 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     identifyNewUser();
     fetchUniversity();
+
     const authToken = localStorage.getItem('token');
-    if (authToken) {
-      const getUserPromise = getUser(JSON.parse(authToken));
-      getUserPromise.then((res) => {
-        if (res.status === 200) {
-          setUserLoggedIn(authToken, dispatch);
-          dispatch({ type: 'SET_USER_CREDENTIALS', payload: res.data.rest });
-        }
-      });
-    }
+    if (authToken) logProvider(authToken, dispatch);
   }, []);
 
   return (

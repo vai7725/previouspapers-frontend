@@ -56,19 +56,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contribute" element={<Earn />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/signup"
-          element={
-            <ProtectRoute
-              state={isUserLoggedIn}
-              redirect={'/'}
-              Navigate={Navigate}
-              message={'User already logged in.'}
-            >
-              <Signup />
-            </ProtectRoute>
-          }
-        />
+        <Route path="/signup" element={<Signup />} />
         <Route
           path="/verify"
           element={

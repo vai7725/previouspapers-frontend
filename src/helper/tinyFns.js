@@ -1,4 +1,5 @@
 import { toast } from 'react-hot-toast';
+import { getUser, setUserLoggedIn } from '../helper/helperFns';
 
 export const handleInpBlur = (e) => {
   const key = e.target.id;
@@ -55,5 +56,20 @@ export const checkFormForEmpty = (inp) => {
       return false;
     }
     return true;
+  }
+};
+
+export const logProvider = (authToken, dispatch) => {
+  if (authToken) {
+    console.log('Found');
+    const getUserPromise = getUser(JSON.parse(authToken));
+    getUserPromise.then((res) => {
+      if (res.status === 200) {
+        console.log(authToken);
+        console.log(res);
+        setUserLoggedIn(authToken, dispatch);
+        dispatch({ type: 'SET_USER_CREDENTIALS', payload: res.data.rest });
+      }
+    });
   }
 };
