@@ -55,18 +55,7 @@ function App() {
         />
         <Route path="/about" element={<About />} />
         <Route path="/contribute" element={<Earn />} />
-        <Route
-          path="/login"
-          element={
-            <ProtectRoute
-              state={isUserLoggedIn}
-              redirect={'/'}
-              Navigate={Navigate}
-            >
-              <Login />
-            </ProtectRoute>
-          }
-        />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/signup"
           element={
