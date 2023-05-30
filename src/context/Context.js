@@ -1,25 +1,30 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { reducer } from './Reducer';
-// require("dotenv");
+import { getUser, setUserLoggedIn } from '../helper/helperFns';
 
+const serverURI = process.env.REACT_APP_SERVER_URI;
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const defaultState = {
+    clientDomain: `previouspapers.netlify.app`,
+    isUserLoggedIn: false,
+    userCredentials: {},
+    profileModalOpen: false,
     userHitForFirstTime: false,
     throwError: false,
     errorMsg: '',
     loading: true,
     smNavLinksOpen: false,
-    backendURL: 'https://ppw-backend.cyclic.app',
+    backendURL: serverURI,
     universityData: [],
-    inputName: '',
-    inputEmail: '',
-    inputUniversity: '',
-    inputMessage: '',
-    showSubmissionMsg: false,
-    submissionMsg: '',
+    contactFormInpValues: {
+      name: '',
+      email: '',
+      university: '',
+      msg: '',
+    },
     showFilterSidebar: window.innerWidth > '576' ? true : false,
     papersData: [],
     courseNameArr: [],
@@ -34,9 +39,24 @@ const AppProvider = ({ children }) => {
     filteredPapersByPaperTitle: [],
     filteredPapersByPaperYear: [],
     arePapersFiltered: false,
-    showAlert: false,
-    alertMsg: '',
     loaderProgress: 0,
+    signUpFormInpValues: {
+      firstName: '',
+      lastName: '',
+      profession: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+    },
+    verifyFormInpValue: '',
+    loginFormInpValues: {
+      email: '',
+      password: '',
+    },
+    formSessions: {
+      passResetSession: false,
+      verificationSession: false,
+    },
   };
 
   const [state, dispatch] = useReducer(reducer, defaultState);
@@ -44,13 +64,12 @@ const AppProvider = ({ children }) => {
   const fetchUniversity = async () => {
     dispatch({ type: 'HANDLE_LOADING', payload: true });
     dispatch({ type: 'SET_PROGRESS_BAR', payload: 30 });
-    const res = await axios.get(`${state.backendURL}/fetchuniversities`);
+    const res = await axios.get(`${state.backendURL}/api/fetchuniversities`);
     dispatch({ type: 'SET_PROGRESS_BAR', payload: 50 });
 
     const data = await res.data;
     dispatch({ type: 'SET_PROGRESS_BAR', payload: 70 });
 
-    // console.log(data.universityData);
     const { universityData } = data;
     if (universityData) {
       dispatch({
@@ -76,6 +95,16 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     identifyNewUser();
     fetchUniversity();
+    const authToken = localStorage.getItem('token');
+    if (authToken) {
+      const getUserPromise = getUser(JSON.parse(authToken));
+      getUserPromise.then((res) => {
+        if (res.status === 200) {
+          setUserLoggedIn(authToken, dispatch);
+          dispatch({ type: 'SET_USER_CREDENTIALS', payload: res.data.rest });
+        }
+      });
+    }
   }, []);
 
   return (

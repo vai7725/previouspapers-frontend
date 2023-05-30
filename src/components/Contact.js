@@ -1,31 +1,44 @@
 import React, { useEffect } from 'react';
 import { GlobalContext } from '../context/Context';
+import { contact } from '../helper/helperFns';
+import { Toaster, toast } from 'react-hot-toast';
+import { checkFormForEmpty, clearFormInps } from '../helper/tinyFns';
 
 const Contact = () => {
   const { state, dispatch } = GlobalContext();
-  const {
-    inputName,
-    inputEmail,
-    inputUniversity,
-    inputMessage,
-    submissionMsg,
-    showSubmissionMsg,
-  } = state;
+  const { contactFormInpValues, userCredentials } = state;
 
-  const storeContactInfo = (e) => {
+  const handleContactFormSubmit = (e) => {
     e.preventDefault();
-    dispatch({ type: 'STORE_CONTACT_INFO' });
+    const formIsValid = checkFormForEmpty(contactFormInpValues);
+    if (formIsValid) {
+      const contactPromise = contact(contactFormInpValues);
+      toast.promise(contactPromise, {
+        loading: 'Processing your request...',
+        success: <b>Contact Request Sent. Thanks</b>,
+        error: <b>Oops! Something went wrong.</b>,
+      });
+      contactPromise.then((res) => {
+        dispatch({
+          type: 'HANDLE_CONTACT_FORM_VALUES',
+          payload: clearFormInps(contactFormInpValues),
+        });
+      });
+    } else {
+      toast.error('Invalid input. Please try again.');
+    }
   };
 
-  const clearSubmissionMsg = () => {
-    dispatch({ type: 'CLEAR_SUBMISSION_MESSAGE' });
+  const handleFormInps = (e) => {
+    dispatch({
+      type: 'HANDLE_CONTACT_FORM_VALUES',
+      payload: {
+        name: `${state.userCredentials.firstName} ${state.userCredentials.lastName}`,
+        email: state.userCredentials.email,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      clearSubmissionMsg();
-    }, 3000);
-  });
 
   useEffect(() => {
     document.title = 'Contact | Previous Papers';
@@ -33,41 +46,36 @@ const Contact = () => {
 
   return (
     <section className="form-section" id="contact-section">
-      <form className="form">
+      <Toaster position="top-center" reverseOrder="false"></Toaster>
+      <form className="form" onSubmit={handleContactFormSubmit}>
         <header className="form_heading">
           <h2>Contact us</h2>
-          {/* <p>
-            Got any problem related to papers or website? Get in touch with us
-            and we'll get connected shortly via email.
-          </p> */}
         </header>
         <main className="form-main">
           <label className="form-label" htmlFor="name">
             Name:
           </label>
           <input
-            className="form-inp"
+            className="form-inp form-inp-disabled"
             type="text"
             placeholder="Enter your name"
-            value={inputName}
+            name="name"
+            value={`${userCredentials.firstName} ${userCredentials.lastName}`}
             id="name"
-            onChange={(e) =>
-              dispatch({ type: 'HANDLE_FORM_NAME', payload: e.target.value })
-            }
+            readOnly
           />
 
           <label className="form-label" htmlFor="email">
             Email:
           </label>
           <input
-            className="form-inp"
+            className="form-inp form-inp-disabled"
             type="email"
             id="email"
             placeholder="Enter your email"
-            value={inputEmail}
-            onChange={(e) =>
-              dispatch({ type: 'HANDLE_FORM_EMAIL', payload: e.target.value })
-            }
+            name="email"
+            value={userCredentials.email}
+            readOnly
           />
           <label className="form-label" htmlFor="university">
             University:
@@ -77,13 +85,9 @@ const Contact = () => {
             type="text"
             id="university"
             placeholder="Enter university name"
-            value={inputUniversity}
-            onChange={(e) =>
-              dispatch({
-                type: 'HANDLE_FORM_UNIVERSITY',
-                payload: e.target.value,
-              })
-            }
+            name="university"
+            value={contactFormInpValues.university}
+            onChange={(e) => handleFormInps(e)}
           />
 
           <label className="form-label" htmlFor="msg">
@@ -95,19 +99,15 @@ const Contact = () => {
             cols="30"
             rows="10"
             placeholder="Write your message"
-            value={inputMessage}
-            onChange={(e) =>
-              dispatch({
-                type: 'HANDLE_FORM_MESSAGE',
-                payload: e.target.value,
-              })
-            }
+            name="msg"
+            value={contactFormInpValues.msg}
+            onChange={(e) => handleFormInps(e)}
           ></textarea>
 
-          <button className="btn form-btn" onClick={storeContactInfo}>
-            Sumbit
-          </button>
-          {showSubmissionMsg && <p>{submissionMsg}</p>}
+          <button className="btn form-btn">Submit</button>
+          <span className="form-notation">
+            We'll connect you shortly via email.
+          </span>
         </main>
       </form>
     </section>

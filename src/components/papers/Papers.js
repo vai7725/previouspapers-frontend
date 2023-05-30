@@ -41,8 +41,6 @@ const Papers = () => {
     const { paperData, msg } = await res.data;
     dispatch({ type: 'SET_PROGRESS_BAR', payload: 50 });
 
-    // console.log(msg);
-
     // making set of courseName
 
     if (paperData) {
@@ -243,8 +241,16 @@ const Papers = () => {
 
   const [offSet, setOffSet] = useState(0);
 
+  const scrollUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   useEffect(() => {
     fetchPapers();
+    scrollUp();
     document.title = `Previous year question papers | ${university} old papers | ${university} paper pattern | ${university} b sc bed old papers | ${university} ba bed old papers | ${university} previous year questions papers`;
     const onScroll = () => setOffSet(window.pageYOffset);
 
@@ -253,13 +259,6 @@ const Papers = () => {
 
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const scrollUp = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   if (loading) {
     return <Loading />;
@@ -270,7 +269,14 @@ const Papers = () => {
   }
 
   return (
-    <section className="papers-section">
+    <section
+      className="papers-section"
+      style={{
+        position: `${
+          showFilterSidebar && window.innerWidth < '576' ? 'fixed' : 'relative'
+        }`,
+      }}
+    >
       <button
         className="btn toggleSidebar-btn"
         onClick={() =>

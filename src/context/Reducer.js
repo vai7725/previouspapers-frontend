@@ -26,7 +26,7 @@ export const reducer = (state, action) => {
 
   if (type === 'SET_USER_VISITED') {
     axios
-      .put(`${state.backendURL}/updatetraffic`)
+      .put(`${state.backendURL}/api/updatetraffic`)
       .then((res) =>
         localStorage.setItem(
           'visitCredentials',
@@ -44,6 +44,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       smNavLinksOpen: !payload,
+      profileModalOpen: false,
     };
   }
   if (type === 'CLOSE_SM_NAV_LINKS') {
@@ -52,73 +53,14 @@ export const reducer = (state, action) => {
       smNavLinksOpen: false,
     };
   }
-  if (type === 'HANDLE_FORM_NAME') {
-    return {
-      ...state,
-      inputName: payload,
-    };
-  }
-  if (type === 'HANDLE_FORM_EMAIL') {
-    return {
-      ...state,
-      inputEmail: payload,
-    };
-  }
-  if (type === 'HANDLE_FORM_UNIVERSITY') {
-    return {
-      ...state,
-      inputUniversity: payload,
-    };
-  }
-  if (type === 'HANDLE_FORM_MESSAGE') {
-    return {
-      ...state,
-      inputMessage: payload,
-    };
-  }
 
-  if (type === 'STORE_CONTACT_INFO') {
-    const contactInfo = {
-      name: state.inputName,
-      email: state.inputEmail,
-      university: state.inputUniversity,
-      msg: state.inputMessage,
-    };
-    if (
-      (state.inputName &&
-        state.inputEmail &&
-        state.inputUniversity &&
-        state.inputMessage) !== ''
-    ) {
-      axios
-        .post(`${state.backendURL}/contact`, contactInfo)
-        .then((res) => res.data)
-        .catch((err) => console.log(err.message));
-
-      return {
-        ...state,
-        showSubmissionMsg: true,
-        submissionMsg:
-          "Thanks for connecting with us. We'll contact you shortly via email.",
-        inputName: '',
-        inputEmail: '',
-        inputUniversity: '',
-        inputMessage: '',
-      };
-    } else {
-      return {
-        ...state,
-        showSubmissionMsg: true,
-        submissionMsg: 'Enter form details correctly.',
-      };
-    }
-  }
-
-  if (type === 'CLEAR_SUBMISSION_MESSAGE') {
+  if (type === 'HANDLE_CONTACT_FORM_VALUES') {
     return {
       ...state,
-      showSubmissionMsg: false,
-      submissionMsg: '',
+      contactFormInpValues: {
+        ...state.contactFormInpValues,
+        ...payload,
+      },
     };
   }
 
@@ -171,6 +113,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       showFilterSidebar: payload,
+      profileModalOpen: false,
     };
   }
 
@@ -265,6 +208,72 @@ export const reducer = (state, action) => {
     return {
       ...state,
       loaderProgress: payload,
+    };
+  }
+
+  if (type === 'HANDLE_SIGNUP_FORM_INPUTS') {
+    return {
+      ...state,
+      signUpFormInpValues: {
+        ...state.signUpFormInpValues,
+        ...payload,
+      },
+    };
+  }
+
+  if (type === 'HANDLE_LOGIN_FORM_INPUTS') {
+    return {
+      ...state,
+      loginFormInpValues: {
+        ...state.loginFormInpValues,
+        ...payload,
+      },
+    };
+  }
+
+  if (type === 'HANDLE_VERIFY_FORM_INPUT') {
+    return {
+      ...state,
+      verifyFormInpValue: payload,
+    };
+  }
+
+  if (type === 'SET_USER_LOGGED_IN') {
+    return {
+      ...state,
+      isUserLoggedIn: payload,
+    };
+  }
+
+  if (type === 'SET_USER_CREDENTIALS') {
+    return {
+      ...state,
+      userCredentials: payload,
+    };
+  }
+
+  if (type === 'TOGGLE_PROFILE_BTN_MODAL') {
+    return {
+      ...state,
+      profileModalOpen: payload,
+      smNavLinksOpen: false,
+    };
+  }
+
+  if (type === 'CLOSE_POP_UP') {
+    return {
+      ...state,
+      profileModalOpen: false,
+    };
+  }
+
+  if (type === 'SET_FORM_SESSION') {
+    return {
+      ...state,
+      formSessions: {
+        ...state.formSessions,
+        ...payload,
+      },
     };
   }
 };
