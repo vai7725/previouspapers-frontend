@@ -1,15 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { FaArrowAltCircleUp, FaTimes } from 'react-icons/fa';
-import { BsFilterLeft } from 'react-icons/bs';
+import { FaTimes } from 'react-icons/fa';
+import { BsFilterLeft, BsArrowUpCircleFill } from 'react-icons/bs';
 import { GlobalContext } from '../../context/Context';
 import PaperCard from './PaperCard';
 import Loading from '../Loading';
-import { CourseNameFilterOption } from './FilterOptions';
-import { CourseYearFilterOption } from './FilterOptions';
-import { SubjectFilterOption } from './FilterOptions';
-import { PaperYearFilterOption } from './FilterOptions';
+import {
+  CourseNameFilterOption,
+  CourseYearFilterOption,
+  SubjectFilterOption,
+  PaperYearFilterOption,
+} from './FilterOptions';
 import Error from '../Error';
 
 const Papers = () => {
@@ -366,7 +368,7 @@ const Papers = () => {
           title="Scroll top"
           onClick={scrollUp}
         >
-          <FaArrowAltCircleUp />
+          <BsArrowUpCircleFill />
         </button>
       )}
     </section>
