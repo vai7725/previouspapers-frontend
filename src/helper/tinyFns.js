@@ -35,7 +35,6 @@ export const clearFormInps = (inp) => {
     for (let key in inp) {
       inp[key] = '';
     }
-    console.log(typeof inp);
     return inp;
   }
   return (inp = '');
@@ -61,14 +60,14 @@ export const checkFormForEmpty = (inp) => {
 
 export const logProvider = (authToken, dispatch) => {
   if (authToken) {
-    console.log('Found');
     const getUserPromise = getUser(JSON.parse(authToken));
     getUserPromise.then((res) => {
       if (res.status === 200) {
-        console.log(authToken);
-        console.log(res);
         setUserLoggedIn(authToken, dispatch);
         dispatch({ type: 'SET_USER_CREDENTIALS', payload: res.data.rest });
+      }
+      if (res.status === 404) {
+        localStorage.removeItem('token');
       }
     });
   }

@@ -19,7 +19,6 @@ export const generateOTP = async (email) => {
     const { data, status } = await axios.get(`${backendURI}/api/generateotp`, {
       params: { email },
     });
-    console.log(data);
     if (status === 201) {
       return Promise.resolve(data);
     }
@@ -44,7 +43,6 @@ export const verifyOTP = async (otp) => {
     const { data, status } = await axios.get(`${backendURI}/api/verifyotp`, {
       params: { code: otp },
     });
-    console.log(status);
     return Promise.resolve({ data, status });
   } catch (error) {
     return Promise.reject({ error });
@@ -66,7 +64,7 @@ export const registerUser = async (credentials) => {
 export const loginUser = async (credentials) => {
   try {
     const res = await axios.post(`${backendURI}/api/login`, credentials);
-    console.log(res.data.token);
+
     return Promise.resolve(res);
   } catch (error) {
     return Promise.reject({ error });
@@ -133,7 +131,6 @@ export const setUserLoggedIn = (token, dispatch) => {
     }
     return dispatch({ type: 'SET_USER_LOGGED_IN', payload: true });
   } catch (error) {
-    console.log('invalid token');
     return dispatch({ type: 'SET_USER_LOGGED_IN', payload: false });
   }
 };
