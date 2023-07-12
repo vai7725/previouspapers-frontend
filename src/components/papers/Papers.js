@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FaTimes } from 'react-icons/fa';
 import { BsFilterLeft, BsArrowUpCircleFill } from 'react-icons/bs';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { GlobalContext } from '../../context/Context';
 import PaperCard from './PaperCard';
 import Loading from '../Loading';
@@ -288,7 +289,8 @@ const Papers = () => {
           })
         }
       >
-        <BsFilterLeft />
+        Filter
+        <AiOutlineSearch className="searchIcon" />
       </button>
       <aside
         className={`${

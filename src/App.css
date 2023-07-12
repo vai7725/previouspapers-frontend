@@ -912,10 +912,17 @@ html {
   top: 6rem;
   left: 1%;
   padding: 0.3rem 0.3rem;
-  background-color: var(--secondary-color);
-  font-size: 2rem;
+  background-color: var(--primary-color);
+  font-size: 1rem;
   margin: 0.3rem 0;
   z-index: 2;
+}
+
+.searchIcon  {
+  margin: 0 .2rem ;
+}
+.searchIcon path {
+  color: #fff;
 }
 
 .filter-sidebar {
